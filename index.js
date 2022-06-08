@@ -13,6 +13,8 @@ const SECURITY_HEADERS = {
 const rootElement = document.getElementById('root');
 const loadingElement = document.getElementById('loading-overlay');
 
+const fightersDetailsMap = new Map();
+
 async function startApp() {
     try {
         loadingElement.style.visibility = 'visible';
@@ -85,11 +87,17 @@ function createFighter(fighter) {
 
     element.append(imageElement, nameElement);
 
-    element.addEventListener('click', (event) => handleFighterClick(event, 'wrapper'), false)
-    imageElement.addEventListener('click', (event) => handleFighterClick(event, 'image'), false)
+    element.addEventListener('click', (event) => handleFighterClick(event, fighter), false)
 
-    function handleFighterClick(event, el) {
-        console.log(el);
+    function handleFighterClick(event, fighter) {
+        const { _id } = fighter;
+
+        if (!fightersDetailsMap.has(_id)) {
+            // send request here
+            fightersDetailsMap.set(_id, fighter);
+        }
+
+        console.log(fightersDetailsMap.get(_id));
     }
 
     return element;
